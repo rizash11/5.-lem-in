@@ -15,6 +15,14 @@ func (app *application) readInput(inputFile string) {
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
+		app.antNumber, err = strconv.Atoi(scanner.Text())
+		if err != nil {
+			continue
+		}
+		break
+	}
+
+	for scanner.Scan() {
 		input := scanner.Text()
 
 		switch {

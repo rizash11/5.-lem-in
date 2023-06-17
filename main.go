@@ -14,10 +14,15 @@ func main() {
 	}
 
 	app.readInput("input.txt")
-	startRoom, endRoom := app.checkForInputErrors()
+	app.startRoom, app.endRoom = app.checkForInputErrors()
 
-	for name, room := range app.rooms {
-		fmt.Printf("%s: %v, %p\n", name, *room, room)
+	var path []string
+	app.pathSearching(path, app.startRoom)
+
+	app.sortPaths()
+
+	fmt.Println()
+	for _, path := range app.paths {
+		fmt.Println(path)
 	}
-	fmt.Println(startRoom, endRoom)
 }

@@ -15,9 +15,16 @@ func (app *application) readInput(inputFile string) {
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
-		app.antNumber, err = strconv.Atoi(scanner.Text())
+		antNumber, err := strconv.Atoi(scanner.Text())
 		if err != nil {
 			continue
+		} else if antNumber <= 0 {
+			app.errorLog.Fatalln("invalid number of ants")
+		}
+
+		app.ants = make([]*Ant, antNumber)
+		for i := range app.ants {
+			app.ants[i] = &Ant{}
 		}
 		break
 	}

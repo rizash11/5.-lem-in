@@ -13,8 +13,14 @@ func (app *application) checkForInputErrors() (startRoom, endRoom string) {
 			endCounter++
 		}
 	}
-	if startCounter == 0 || startCounter > 1 || endCounter == 0 || endCounter > 1 {
+
+	if startCounter != 1 || endCounter != 1 {
 		app.errorLog.Fatalln("invalid number of start/end rooms")
+	}
+
+	if app.rooms[startRoom] == app.rooms[endRoom] {
+		app.errorLog.Fatalln("start and end room have the same coordinates")
+
 	}
 
 	return startRoom, endRoom

@@ -8,11 +8,17 @@ type application struct {
 	infoLog            *log.Logger
 	startRoom, endRoom string
 	paths              [][]string
-	antNumber          int
+	optimalPaths       [][]string
+	ants               []*Ant
 }
 
 type Room struct {
 	links       []string
 	coordinates [2]int
 	roomType    string
+}
+
+type Ant struct {
+	Order int
+	Path  []string
 }

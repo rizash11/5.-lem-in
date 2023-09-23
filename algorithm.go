@@ -5,6 +5,10 @@ import "fmt"
 func (app *application) findOptimalPaths() {
 	var path []string
 	app.pathSearching(path, app.startRoom)
+	if len(app.paths) == 0 {
+		app.errorLog.Fatalln("no paths from start to end")
+	}
+
 	app.sortPaths()
 
 	for _, path := range app.paths {
@@ -16,10 +20,12 @@ func (app *application) findOptimalPaths() {
 
 func (app *application) pathSearching(path []string, roomName string) {
 	path = append(path, roomName)
+	fmt.Printf("%p: %v\n", &path, path)
 
 	for _, link := range app.rooms[roomName].links {
 		if app.rooms[link] == app.rooms[app.endRoom] {
 			path = append(path, link)
+			fmt.Printf("%p: %v\n", &path, path)
 
 			correctPath := make([]string, len(path))
 			copy(correctPath, path)
@@ -57,10 +63,6 @@ func (app *application) optimal(path []string) bool {
 }
 
 func (app *application) sortPaths() {
-	if len(app.paths) == 0 {
-		app.errorLog.Fatalln("no paths from start to end")
-	}
-
 	for i := range app.paths {
 		for j := i + 1; j < len(app.paths); j++ {
 			if len(app.paths[i]) > len(app.paths[j]) {
